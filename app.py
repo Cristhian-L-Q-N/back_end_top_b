@@ -3,7 +3,8 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from pymysql import connect
 from werkzeug.security import check_password_hash, generate_password_hash
 import pymysql.cursors
-
+import asyncio
+import aiomysql
 # Configura la aplicación Flask
 app = Flask(__name__)
 
@@ -12,12 +13,13 @@ app = Flask(__name__)
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = 'ultrasecret'
 
-connection = pymysql.connect(host='localhost',
-                                 user='root',
-                                 password='leverna2003',
-                                 db='INVENTORY_MANAGMENT',
-                                 cursorclass=pymysql.cursors.DictCursor)
-
+connection = pymysql.connect(
+    host='containers-us-west-24.railway.app:5828',
+    user='root',
+    password='IJDLZQVMpvbnBAuOsGBg',
+    db='railway',
+    cursorclass=pymysql.cursors.DictCursor
+)
 # End Point con verificacion jwt, para crear empleados
 @app.route('/create_empleado', methods=['POST'])
 @jwt_required()
